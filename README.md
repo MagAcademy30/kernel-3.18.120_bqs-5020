@@ -1,30 +1,52 @@
-This is 3.18.x MT6580 kernel source ported to be used on DEXP Ixion P350.
+# Linux kernel 3.18.120 for BQS-5020
+Это исходный код ядра линукс для портирования дистрибутивов линукс для BQS-5020
 
-## Known information
-| Subsystem | Driver name | Availability | Working |
-|-----------|-------------|--------------|---------|
-| LCM driver | `nt35521_hd720_dsi_vdo_rixin` | Yes | Yes |
-| Touch panel | `GT9XX (i2c 1-005D)` | Yes | Yes |
-| GPU | `Mali-400 MP` | Yes | Yes |
-| Camera #1 | `imx219_mipi_raw` | Yes | Yes |
-| Camera #2 | `gc2755_mipi_raw` | Yes | Yes |
-| Accelerometer | `MC3XXX (i2c 2-004c)` | Yes | Yes |
-| ALS/PS | `stk3x1x (i2c 2-0048)` | Yes | Yes |
-| Flash | `Samsung F722MB` | Yes | Yes |
-| Lens #1 | `DW9714AF (i2c 0-0018)` | Yes | Yes |
-| Lens #2 | `BU6424AF (i2c 0-0019)` | Yes | Unknow |
-| RAM | `1 GB LPDDR3_1066` | - | Yes |
-| Sound | `mtsndcard` | - | Yes |
-| Accdet | `mt6580-accdet` | - | Yes |
-| Other | `kd_camera_hw (i2c 0-007f)` | - | Yes |
+Тестировалось на 3 ревизии. Проверялось на дистрибутиве RPIOS Debian 12 Bookworm
 
-## Acknowledgements
+### Что работает/неработает:
+ + [x] 3D
+ + [x] Экран(fbdev, fbcon не работает)
+ + [x] Акселерометр(BMA222)
+ + [ ] Аудио
+ + [ ] Блютуз
+ + [ ] Вайфай
+ + [ ] Модем
+ + [x] Вибромотор
+ + [x] Светодиоды
+ + [ ] Микрофон
+ + [ ] Камеры
+ + [x] Вспышка
+ + [x] Батарея
+ + [x] Сон(частично)
+ + [x] Тачскрин	
+## Сборка ядра
+Установка пакетов для сборки
+```
+sudo apt install -y python2 git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison
+```
 
-(in alphabetical order)
+Линкуем /usr/bin/python2 >>> /usr/bin/python
+```
+ln -s /usr/bin/python2 /usr/bin/python
+```
 
-* [aleha.druga (4pda.ru)](https://4pda.ru/forum/index.php?showuser=3708916) [(@aleha-druga)](https://github.com/aleha-druga)
-* [kva3ar (4pda.ru)](https://4pda.ru/forum/index.php?showuser=6751930)
-* [nik-kst (4pda.ru)](https://4pda.ru/forum/index.php?showuser=4052130) [(@nik124seleznev)](https://github.com/nik124seleznev)
-* [Skyrimus (4pda.ru)](https://4pda.ru/forum/index.php?showuser=3927665) [(@Skyrimus)](https://github.com/Skyrimus)
-* Yuvraj Saxena [Yuvraj (telegram)](https://t.me/imyuvraj)[(@rad0n)](https://github.com/rad0n)
+Скачиваем тулчейн(в ~ директории):
+```
+cd ~
+git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git -b cm-14.1
+```
+Сборка ядра:
+```
+cd kernel_bqs5020
+mkdir out
+make O=out ARCH=arm CROSS_COMPILE=/home/mg30/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9/bin/arm-linux-androideabi- V3702_defconfig # ВАЖНО! Заменить mg30 на текущего пользователя!
+make O=out ARCH=arm CROSS_COMPILE=/home/mg30/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9/bin/arm-linux-androideabi- -j8 # ВАЖНО! Заменить mg30 на текущего пользователя!
+```
 
+Что бы запустилось ядро:DDDDD :
+```
+cd out/arch/arm/boot
+cat dts/V3702.dtb >> zImage
+```
+
+ВУАЛЯ!
