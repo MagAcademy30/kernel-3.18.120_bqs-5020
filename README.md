@@ -43,10 +43,4 @@ make O=out ARCH=arm CROSS_COMPILE=/home/mg30/android_prebuilts_gcc_linux-x86_arm
 make O=out ARCH=arm CROSS_COMPILE=/home/mg30/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9/bin/arm-linux-androideabi- -j8 # ВАЖНО! Заменить mg30 на текущего пользователя!
 ```
 
-Что бы запустилось ядро:DDDDD :
-```
-cd out/arch/arm/boot
-cat dts/V3702.dtb >> zImage
-```
-
-ВУАЛЯ!
+Скомпилированное ядро хранится в out/arch/arm/boot/zImage-dtb
