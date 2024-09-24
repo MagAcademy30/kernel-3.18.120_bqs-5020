@@ -3,6 +3,9 @@
 
 Работа ядра тестировалось на 3 ревизии. Проверялось ядро на дистрибутиве RPIOS Debian 12 Bookworm
 
+ > **NOTICENOTICENOTICENOTICENOTICENOTICENOTICENOTICENOTICENOTICE**
+> ядро лучше не использовать, рекомендуется использовать 3.18.79 (https://github.com/MagAcademy30/kernel-3.18.79_bqs-5020)
+
 ### Что работает/неработает:
  + [ ] 3D
  + [x] Экран(fbdev, fbcon не работает)
